@@ -5,13 +5,14 @@
  */
 
  import React, { Component } from 'react';
+ import Header from './components/Header';
  import Autocomplete from './components/Autocomplete';
  import {
    AppRegistry,
    StyleSheet,
+   Text,
    View
  } from 'react-native';
- import { Container, Content, Card, CardItem, Body, Text, Button, Header, Title, Subtitle, Left, Right, Icon } from 'native-base';
 
 export default class Bus extends Component {
   filteredList = ['aa', 'bb', 'cc', 'dd', 'aab', 'aac', 'bbd'];
@@ -25,30 +26,14 @@ export default class Bus extends Component {
 
   render() {
     return (
-      <Container>
-        <Header>
-          <Body>
-              <Title>Seach</Title>
-              <Subtitle>Subtitle</Subtitle>
-          </Body>
-          <Right />
-      </Header>
-        <Autocomplete
-         data={this.filteredList}
-         hintText={'From'}
-         onChange={this.onChange}
-         onSelect={this.onSelect}
-        />
+      <View style={styles.container}>
         <Autocomplete
          data={this.filteredList}
          hintText={'To'}
          onChange={this.onChange}
          onSelect={this.onSelect}
         />
-        <Button block>
-          <Text>Search </Text>
-        </Button>
-      </Container>
+      </View>
     );
   }
 }
@@ -56,9 +41,10 @@ export default class Bus extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    justifyContent: 'flex-start',
+    padding: 30,
+    backgroundColor: '#E0FFFF',
+    flexDirection: 'column'
   },
   welcome: {
     fontSize: 20,
@@ -70,6 +56,9 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+  button: {
+    flex:1,
+  }
 });
 
 AppRegistry.registerComponent('Bus', () => Bus);

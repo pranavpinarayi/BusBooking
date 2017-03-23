@@ -4,10 +4,12 @@ import {
   StyleSheet,
   Text,
   View,
+  TextInput,
+  ListView
 } from 'react-native';
-import { Container, Content, Form, Item, Input, Icon, Card, ListItem } from 'native-base';
 
 const { string, func } = PropTypes;
+const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 
 class Autocomplete extends Component {
   static propTypes = {
@@ -26,10 +28,11 @@ class Autocomplete extends Component {
 
   state = {
     showList: false,
+    dataSource: ds.cloneWithRows(this.props.data),
   };
 
   onChange = (event) => {
-    const value = event;
+    const { value } = event.target;
 
     //this.props.onChange(value);
     this.setState({
@@ -46,28 +49,27 @@ class Autocomplete extends Component {
   };
 
 
-  renderItem(item, index) {
+  renderItem(item) {
     return (
-      <Container
+      <View
         style={styles.item}
-        key={index}
         onClick={() => this.onSelect(item)}
       >
-        <ListItem><Text>{item}</Text></ListItem>
-      </Container>
+        <Text>{item}</Text>
+      </View>
     );
   }
 
   renderList() {
-    const {
-      data,
-    } = this.props;
+    const { dataSource, showList } = this.state;
 
-    if (this.state.showList && data && data.length > 0) {
+    if (showList && dataSource && dataSource.getRowCount() > 0 ) {
       return (
-        <Container>
-          { data.map((item, index) => this.renderItem(item, index)) }
-        </Container>
+        <ListView
+          dataSource={dataSource}
+          renderRow={(item) => this.renderItem(item)}
+          style={styles.list}
+        />
       );
     }
 
@@ -83,20 +85,22 @@ class Autocomplete extends Component {
     } = this.props;
 
     return (
-      <Container>
-        <Content>
-          <Card>
-          <Item regular>
-             <Input
-              placeholder={hintText}
-              onChangeText={this.onChange}
-              value={query}
-            />
-         </Item>
+      <View style={styles.autocomplete} >
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.field}
+            ref={(input) => { this.searchInput = input; }}
+            disabled={disabled}
+            placeholder={hintText}
+            onChange={this.onChange}
+            value={query}
+            underlineColorAndroid='transparent'
+          />
+        </View>
+        <View>
           {this.renderList()}
-          </Card>
-        </Content>
-      </Container>
+        </View>
+      </View>
     );
   }
 }
