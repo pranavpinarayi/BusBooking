@@ -10,9 +10,16 @@ import {
   Button
 } from 'react-native';
 
+import { incrementValue } from '../../redux/modules/test/action';
+import { connect } from 'react-redux';
+
 const { string, func } = PropTypes;
 const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 
+@connect(state => ({
+  value: state.val,
+}),
+{actions:incrementValue})
 class Autocomplete extends Component {
   static propTypes = {
     data: PropTypes.array,
@@ -63,6 +70,7 @@ class Autocomplete extends Component {
   renderItem(item) {
     return (
       <TouchableHighlight
+        underlayColor="white"
         style={styles.item}
         onPress={() => this.onSelect(item)}
       >
@@ -93,6 +101,7 @@ class Autocomplete extends Component {
       className,
     } = this.props;
 
+    console.log(this.props);
     return (
       <View style={styles.autocomplete} >
         <View style={styles.inputContainer}>
@@ -105,16 +114,16 @@ class Autocomplete extends Component {
             value={query}
             underlineColorAndroid='transparent'
           />
-          <Button
-            onPress={this.onPress}
-            title="Learn More"
-            color="#841584"
-            accessibilityLabel="Learn more about this purple button"
-          />
         </View>
         <View>
           {this.renderList()}
         </View>
+        <Button
+          onPress={this.props.actions}
+          title="Test"
+          color="#841584"
+          accessibilityLabel="Test"
+        />
       </View>
     );
   }

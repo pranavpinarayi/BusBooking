@@ -7,12 +7,17 @@
  import React, { Component } from 'react';
  import Header from './components/Header';
  import Autocomplete from './components/Autocomplete';
+ import { Provider } from 'react-redux';
  import {
    AppRegistry,
    StyleSheet,
    Text,
    View
  } from 'react-native';
+
+ import { createStore } from 'redux'
+ import todoApp from './redux/modules/test/reducer'
+ let store = createStore(todoApp, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 export default class Bus extends Component {
   filteredList = ['aa', 'bb', 'cc', 'dd', 'aab', 'aac', 'bbd'];
@@ -31,7 +36,9 @@ export default class Bus extends Component {
   };
 
   render() {
+    console.log(store.val);
     return (
+      <Provider key="provider" store={store}>
       <View style={styles.container}>
         <Autocomplete
          data={this.state.filteredList}
@@ -40,6 +47,7 @@ export default class Bus extends Component {
          onSelect={this.onSelect}
         />
       </View>
+      </Provider>
     );
   }
 }
