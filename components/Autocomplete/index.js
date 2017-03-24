@@ -5,7 +5,9 @@ import {
   Text,
   View,
   TextInput,
-  ListView
+  ListView,
+  TouchableHighlight,
+  Button
 } from 'react-native';
 
 const { string, func } = PropTypes;
@@ -31,32 +33,41 @@ class Autocomplete extends Component {
     dataSource: ds.cloneWithRows(this.props.data),
   };
 
-  onChange = (event) => {
-    const { value } = event.target;
+  componentWillReceiveProps({ data }) {
+    const dataSource = this.state.dataSource.cloneWithRows(data);
+    this.setState({ dataSource });
+  }
 
-    //this.props.onChange(value);
+  onChange = (inputValue) => {
+    const value = inputValue;
+
+    this.props.onChange(value);
     this.setState({
       showList: true,
     });
   };
 
   onSelect(item) {
-    this.searchInput.value = item;
+    this.searchInput._lastNativeText = item;
     this.props.onSelect(item);
     this.setState({
       showList: false,
     });
   };
 
+  onPress() {
+    console.log('clicked');
+  }
+
 
   renderItem(item) {
     return (
-      <View
+      <TouchableHighlight
         style={styles.item}
-        onClick={() => this.onSelect(item)}
+        onPress={() => this.onSelect(item)}
       >
         <Text>{item}</Text>
-      </View>
+      </TouchableHighlight>
     );
   }
 
@@ -69,10 +80,8 @@ class Autocomplete extends Component {
           dataSource={dataSource}
           renderRow={(item) => this.renderItem(item)}
           style={styles.list}
-        />
-      );
+        />);
     }
-
     return null;
   }
 
@@ -92,9 +101,15 @@ class Autocomplete extends Component {
             ref={(input) => { this.searchInput = input; }}
             disabled={disabled}
             placeholder={hintText}
-            onChange={this.onChange}
+            onChangeText={value => this.onChange(value)}
             value={query}
             underlineColorAndroid='transparent'
+          />
+          <Button
+            onPress={this.onPress}
+            title="Learn More"
+            color="#841584"
+            accessibilityLabel="Learn more about this purple button"
           />
         </View>
         <View>

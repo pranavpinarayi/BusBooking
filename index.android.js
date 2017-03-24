@@ -21,15 +21,21 @@ export default class Bus extends Component {
   };
 
   onChange = (value) => {
-    this.setState({filteredList: this.location.filter((listItem) => listItem.includes(value))});
+    console.log('value', value);
+    console.log('this.filteredList', this.filteredList);
+    this.setState({filteredList: this.filteredList.filter((listItem) => listItem.includes(value))});
+  };
+
+  state = {
+    filteredList: [],
   };
 
   render() {
     return (
       <View style={styles.container}>
         <Autocomplete
-         data={this.filteredList}
-         hintText={'To'}
+         data={this.state.filteredList}
+         hintText={'From'}
          onChange={this.onChange}
          onSelect={this.onSelect}
         />

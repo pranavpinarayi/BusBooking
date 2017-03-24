@@ -23,7 +23,6 @@ field: {
   color: '#000'
  },
 list: {
-  ...border,
   backgroundColor: 'white',
   borderTopWidth: 0,
   left: 0,
@@ -31,6 +30,13 @@ list: {
   position: 'absolute',
   right: 0,
   zIndex: 999990,
+  shadowColor: "#000000",
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    shadowOffset: {
+      height: 1,
+      width: 0
+    }
 },
 item: {
   padding: 5,
@@ -38,7 +44,7 @@ item: {
 inputContainer: {
   ...border,
   marginBottom: 0,
-  height: 80,
+  height: 40,
 },
 });
 
