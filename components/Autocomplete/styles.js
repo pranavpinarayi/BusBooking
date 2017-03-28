@@ -22,6 +22,9 @@ field: {
   alignSelf: 'stretch',
   color: '#000'
  },
+listContainer: {
+  backgroundColor: '#DADADA'
+},
 list: {
   backgroundColor: 'white',
   borderTopWidth: 0,

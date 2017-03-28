@@ -55,8 +55,7 @@ class Autocomplete extends Component {
   };
 
   onSelect(item) {
-    this.searchInput._lastNativeText = item;
-    this.props.onSelect(item);
+    this.searchInput.setNativeProps({text: item});
     this.setState({
       showList: false,
     });
@@ -70,7 +69,6 @@ class Autocomplete extends Component {
   renderItem(item) {
     return (
       <TouchableHighlight
-        underlayColor="white"
         style={styles.item}
         onPress={() => this.onSelect(item)}
       >
@@ -85,6 +83,7 @@ class Autocomplete extends Component {
     if (showList && dataSource && dataSource.getRowCount() > 0 ) {
       return (
         <ListView
+          contentContainerStyle={styles.listContainer}
           dataSource={dataSource}
           renderRow={(item) => this.renderItem(item)}
           style={styles.list}
@@ -118,12 +117,6 @@ class Autocomplete extends Component {
         <View>
           {this.renderList()}
         </View>
-        <Button
-          onPress={this.props.actions}
-          title="Test"
-          color="#841584"
-          accessibilityLabel="Test"
-        />
       </View>
     );
   }
