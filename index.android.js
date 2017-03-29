@@ -5,42 +5,38 @@
  */
 
  import React, { Component } from 'react';
- import BusSearch from './src/pages/BusSearch';
- import BusList from './src/pages/BusList';
  import { Provider } from 'react-redux';
  import {
    AppRegistry,
    StyleSheet,
    Navigator,
-   TouchableHighlight,
-   Text
  } from 'react-native';
-  import { StackNavigator } from 'react-navigation';
+ import { createStore } from 'redux';
+ import BusSearch from './src/pages/BusSearch';
+ import BusList from './src/pages/BusList';
+ import busReducer from './src/redux/modules/test/reducer';
 
- import { createStore } from 'redux'
- import busReducer from './src/redux/modules/test/reducer'
+ const store = createStore(busReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
- let store = createStore(busReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
- let busArray = [
-           {
-             'no':'RAC122',
-             'arrival':'11.30',
-             'depart':'2:00'
-           },
-           {
-             'no':'TVP122',
-             'arrival':'12.30',
-             'depart':'2:45'
-           },
-           {
-             'no':'RAC322',
-             'arrival':'2.30',
-             'depart':'12:00'
-           }
-
+ const busArray = [
+      {
+       'no':'RAC122',
+       'arrival':'11.30',
+       'depart':'2:00'
+      },
+      {
+       'no':'TVP122',
+       'arrival':'12.30',
+       'depart':'2:45'
+      },
+      {
+       'no':'RAC322',
+       'arrival':'2.30',
+       'depart':'12:00'
+      }
  ]
 export default class Bus extends Component {
-  renderScene = (props, navigator)  => { // if NavigationCardStack
+  renderScene = (props, navigator)  => {
     switch (props.index) {
       case 0:
         return <BusSearch navigator={navigator}/>
