@@ -19,6 +19,7 @@
     "redux-logger": "^3.0.0"
   },
   "devDependencies": {
+    "axios-mock-adapter": "^1.8.1",
     "babel-eslint": "^6.1.2",
     "babel-jest": "19.0.0",
     "babel-preset-react-native": "1.9.1",

@@ -48,13 +48,13 @@ class BusSearch extends React.Component {
     return (
       <View style={styles.container}>
         <Autocomplete
-         data={this.state.filteredList}
+         data={this.props.value}
          hintText={'From'}
          onChange={this.onChange}
          onSelect={this.onSelect}
         />
         <Autocomplete
-         data={this.state.filteredList}
+         data={this.props.value}
          hintText={'From'}
          onChange={this.onChange}
          onSelect={this.onSelect}

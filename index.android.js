@@ -12,12 +12,16 @@
    Navigator,
  } from 'react-native';
  import axios from 'axios';
+ import MockAdapter from 'axios-mock-adapter';
  import { createStore, applyMiddleware } from 'redux';
  import logger from 'redux-logger'
  import BusSearch from './src/pages/BusSearch';
  import BusList from './src/pages/BusList';
  import reducer from './src/redux/modules/BusSearch';
  import apiMiddleware from './src/redux/middlewares/apiMiddleware';
+
+var mock = new MockAdapter(axios);
+ mock.onGet('/locations').reply(200, ['aa', 'bb', 'cc', 'dd', 'aab', 'aac', 'bbd']);
 
  const middleware = applyMiddleware(apiMiddleware.withExtraArgument(axios), logger);
  const store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(), middleware);
