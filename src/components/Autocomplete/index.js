@@ -11,15 +11,10 @@ import {
 } from 'react-native';
 
 import { incrementValue } from '../../redux/modules/test/action';
-import { connect } from 'react-redux';
 
 const { string, func } = PropTypes;
 const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 
-@connect(state => ({
-  value: state.val,
-}),
-{actions:incrementValue})
 class Autocomplete extends Component {
   static propTypes = {
     data: PropTypes.array,
@@ -47,7 +42,6 @@ class Autocomplete extends Component {
 
   onChange = (inputValue) => {
     const value = inputValue;
-
     this.props.onChange(value);
     this.setState({
       showList: true,
@@ -67,6 +61,7 @@ class Autocomplete extends Component {
 
 
   renderItem(item) {
+    console.log('item', item);
     return (
       <TouchableHighlight
         style={styles.item}
@@ -85,7 +80,7 @@ class Autocomplete extends Component {
         <ListView
           contentContainerStyle={styles.listContainer}
           dataSource={dataSource}
-          renderRow={(item) => this.renderItem(item)}
+          renderRow={(item) => this.renderItem(item.city)}
           style={styles.list}
         />);
     }

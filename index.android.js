@@ -11,13 +11,16 @@
    StyleSheet,
    Navigator,
  } from 'react-native';
- import { createStore } from 'redux';
+ import axios from 'axios';
+ import { createStore, applyMiddleware } from 'redux';
+ import logger from 'redux-logger'
  import BusSearch from './src/pages/BusSearch';
  import BusList from './src/pages/BusList';
- import busReducer from './src/redux/modules/test/reducer';
+ import reducer from './src/redux/modules/BusSearch';
+ import apiMiddleware from './src/redux/middlewares/apiMiddleware';
 
- const store = createStore(busReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
-
+ const middleware = applyMiddleware(apiMiddleware.withExtraArgument(axios), logger);
+ const store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(), middleware);
  const busArray = [
       {
        'no':'RAC122',

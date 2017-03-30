@@ -1,5 +1,7 @@
 import React, { PropTypes, Component } from 'react';
+import { connect } from 'react-redux';
 import Autocomplete from '../../components/Autocomplete'
+import { loadLocation } from '../../redux/modules/BusSearch/action';
 // import styles from './styles.scss';
 import {
   StyleSheet,
@@ -12,6 +14,12 @@ import { StackNavigator } from 'react-navigation';
 
 const { string, func } = PropTypes;
 
+@connect(state => ({
+  value: state.data,
+}),
+{
+  loadLoc:loadLocation,
+})
 class BusSearch extends React.Component {
   static navigationOptions = {
     title: 'Bus Search',
@@ -23,8 +31,7 @@ class BusSearch extends React.Component {
   };
 
   onChange = (value) => {
-    console.log('value', value);
-    console.log('this.filteredList', this.filteredList);
+    this.props.loadLoc();
     this.setState({filteredList: this.filteredList.filter((listItem) => listItem.includes(value))});
   };
 
